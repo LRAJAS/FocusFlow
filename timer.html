@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Study Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="timer-page">
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-small">
+                <span class="logo-icon-small">⏱️</span>
+                <span class="brand-name-small">FocusFlow</span>
+            </div>
+            <div class="user-info">
+                <span id="userPoints" class="points-display">0 pts</span>
+                <button id="logoutBtn" class="btn-icon" title="Logout">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 3h8v2H5v10h6v2H3V3zm12.59 5L13 10.59 14.41 12 19 7.41 14.41 3 13 4.41 15.59 7H9v2h6.59z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Timer Section -->
+    <main class="timer-section">
+        <div class="timer-container">
+            <!-- Timer Setup -->
+            <div id="timerSetup" class="timer-setup">
+                <h2>Choose Your Focus Duration</h2>
+                <div class="duration-selector">
+                    <button class="duration-btn" data-minutes="10">10 min</button>
+                    <button class="duration-btn" data-minutes="15">15 min</button>
+                    <button class="duration-btn" data-minutes="20">20 min</button>
+                    <button class="duration-btn" data-minutes="25">25 min</button>
+                    <button class="duration-btn" data-minutes="30">30 min</button>
+                    <button class="duration-btn" data-minutes="45">45 min</button>
+                    <button class="duration-btn" data-minutes="60">60 min</button>
+                    <button class="duration-btn" data-minutes="90">90 min</button>
+                    <button class="duration-btn" data-minutes="120">120 min</button>
+                    <button class="duration-btn" data-minutes="180">180 min</button>
+                </div>
+                
+                <div class="custom-duration">
+                    <label for="customMinutes">Or set custom (10-180 min, steps of 5):</label>
+                    <input type="number" id="customMinutes" min="10" max="180" step="5" placeholder="Minutes">
+                </div>
+
+                <div class="timer-style-selector">
+                    <h3>Select Timer Style</h3>
+                    <div class="style-options">
+                        <button class="style-btn active" data-style="digital">
+                            <div class="style-preview">🔢</div>
+                            <span>Digital</span>
+                        </button>
+                        <button class="style-btn" data-style="analog">
+                            <div class="style-preview">🕐</div>
+                            <span>Analog</span>
+                        </button>
+                        <button class="style-btn" data-style="progress">
+                            <div class="style-preview">⭕</div>
+                            <span>Progress</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="startTimerBtn" class="btn btn-primary btn-large">Start Focus Session</button>
+            </div>
+
+            <!-- Timer Display -->
+            <div id="timerDisplay" class="timer-display" style="display: none;">
+                <div class="timer-overlay"></div>
+                <div class="timer-mode-info">
+                    <h2>Focus Time</h2>
+                    <p class="focus-message">Stay on this tab. Switching tabs will reset your timer!</p>
+                </div>
+
+                <!-- Digital Timer -->
+                <div id="digitalTimer" class="digital-timer">
+                    <div class="time-display">
+                        <span id="minutesDisplay">25</span>
+                        <span class="separator">:</span>
+                        <span id="secondsDisplay">00</span>
+                    </div>
+                </div>
+
+                <!-- Analog Timer -->
+                <div id="analogTimer" class="analog-timer" style="display: none;">
+                    <svg viewBox="0 0 200 200" class="clock-svg">
+                        <circle cx="100" cy="100" r="90" class="clock-face"/>
+                        <circle cx="100" cy="100" r="5" class="clock-center"/>
+                        <line id="minuteHand" x1="100" y1="100" x2="100" y2="40" class="minute-hand"/>
+                        <line id="secondHand" x1="100" y1="100" x2="100" y2="30" class="second-hand"/>
+                        <!-- Hour markers -->
+                        <circle cx="100" cy="20" r="3" class="hour-marker"/>
+                        <circle cx="160" cy="40" r="3" class="hour-marker"/>
+                        <circle cx="180" cy="100" r="3" class="hour-marker"/>
+                        <circle cx="160" cy="160" r="3" class="hour-marker"/>
+                        <circle cx="100" cy="180" r="3" class="hour-marker"/>
+                        <circle cx="40" cy="160" r="3" class="hour-marker"/>
+                        <circle cx="20" cy="100" r="3" class="hour-marker"/>
+                        <circle cx="40" cy="40" r="3" class="hour-marker"/>
+                    </svg>
+                </div>
+
+                <!-- Progress Timer -->
+                <div id="progressTimer" class="progress-timer" style="display: none;">
+                    <svg viewBox="0 0 200 200" class="progress-svg">
+                        <circle cx="100" cy="100" r="80" class="progress-bg"/>
+                        <circle id="progressCircle" cx="100" cy="100" r="80" class="progress-circle"/>
+                    </svg>
+                    <div class="progress-text">
+                        <span id="progressMinutes">25</span>
+                        <span class="separator">:</span>
+                        <span id="progressSeconds">00</span>
+                    </div>
+                    <div class="progress-percentage" id="progressPercentage">100%</div>
+                </div>
+
+                <div class="timer-controls">
+                    <button id="pauseBtn" class="btn btn-secondary">Pause</button>
+                    <button id="resetBtn" class="btn btn-outline">Reset</button>
+                </div>
+            </div>
+
+            <!-- Completion Screen -->
+            <div id="completionScreen" class="completion-screen" style="display: none;">
+                <div class="completion-content">
+                    <div class="success-icon">🎉</div>
+                    <h2>Amazing Work!</h2>
+                    <div class="points-earned">
+                        <span class="points-label">Points Earned:</span>
+                        <span id="earnedPoints" class="points-value">0</span>
+                    </div>
+                    <div class="motivational-quote">
+                        <p id="quoteText">"Success is the sum of small efforts repeated day in and day out."</p>
+                        <cite id="quoteAuthor">- Robert Collier</cite>
+                    </div>
+                    <button id="newSessionBtn" class="btn btn-primary btn-large">Start New Session</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Tips Notification -->
+        <div id="studyTip" class="study-tip" style="display: none;">
+            <div class="tip-content">
+                <span class="tip-icon">💡</span>
+                <p id="tipText"></p>
+                <button class="tip-close">&times;</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- AI Chatbot -->
+    <div id="chatbotContainer" class="chatbot-container">
+        <button id="chatbotToggle" class="chatbot-toggle" title="AI Study Buddy - Ask me anything!">
+            <div class="bot-container">
+                <div class="bot-head">
+                    <div class="bot-antenna">
+                        <div class="antenna-ball"></div>
+                    </div>
+                    <div class="bot-eyes">
+                        <div class="bot-eye"></div>
+                        <div class="bot-eye"></div>
+                    </div>
+                    <div class="bot-mouth"></div>
+                </div>
+            </div>
+            <span class="ai-badge">AI</span>
+            <span class="chatbot-pulse"></span>
+        </button>
+        
+        <div id="chatbotWindow" class="chatbot-window" style="display: none;">
+            <div class="chatbot-header">
+                <h3>AI Study Buddy</h3>
+                <button id="chatbotClose" class="btn-icon-small">&times;</button>
+            </div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask me anything..." />
+                <button id="sendMessage" class="btn btn-primary btn-small">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8-dNHFthdAcBLXdWVxDp60gDjxY6j4N8",
+            authDomain: "pomodoro-site-5ef54.firebaseapp.com",
+            databaseURL: "https://pomodoro-site-5ef54-default-rtdb.firebaseio.com",
+            projectId: "pomodoro-site-5ef54",
+            storageBucket: "pomodoro-site-5ef54.firebasestorage.app",
+            messagingSenderId: "85648862685",
+            appId: "1:85648862685:web:f1d946e320f672441e9a34",
+            measurementId: "G-D1Y2LVB3YY"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        window.firebaseApp = app;
+        window.firebaseAuth = getAuth(app);
+        window.firebaseDatabase = getDatabase(app);
+    </script>
+    <script type="module" src="timer.js"></script>
+</body>
+</html>

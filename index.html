@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Transform Distraction into Achievement</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo-icon">⏱️</div>
+                <h1 class="brand-name">FocusFlow</h1>
+                <p class="tagline">Turn your device from distraction to dedication</p>
+            </div>
+
+            <div class="login-methods">
+                <button id="googleSignInBtn" class="btn btn-google">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 01-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.351z" fill="#4285F4"/>
+                        <path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0010 20z" fill="#34A853"/>
+                        <path d="M4.405 11.9c-.2-.6-.314-1.24-.314-1.9 0-.66.114-1.3.314-1.9V5.51H1.064A9.996 9.996 0 000 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59z" fill="#FBBC05"/>
+                        <path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.19 5.736 7.395 3.977 10 3.977z" fill="#EA4335"/>
+                    </svg>
+                    Continue with Google
+                </button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <form id="pinLoginForm" class="pin-login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pin">PIN (4-8 digits)</label>
+                        <input type="password" id="pin" placeholder="Enter your PIN" pattern="[0-9]{4,8}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="#" id="showSignupBtn">Create one</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-preview">
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <h3>Stay Focused</h3>
+                <p>Timer resets if you switch tabs - no cheating!</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🏆</div>
+                <h3>Earn Points</h3>
+                <p>Build your streak and unlock achievements</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Study Buddy</h3>
+                <p>Ask questions without leaving your focus zone</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Your Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPin">PIN (4-8 digits)</label>
+                    <input type="password" id="signupPin" placeholder="Create a PIN" pattern="[0-9]{4,8}" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPin">Confirm PIN</label>
+                    <input type="password" id="confirmPin" placeholder="Confirm your PIN" pattern="[0-9]{4,8}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Modular) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase, ref, set, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8-dNHFthdAcBLXdWVxDp60gDjxY6j4N8",
+            authDomain: "pomodoro-site-5ef54.firebaseapp.com",
+            databaseURL: "https://pomodoro-site-5ef54-default-rtdb.firebaseio.com",
+            projectId: "pomodoro-site-5ef54",
+            storageBucket: "pomodoro-site-5ef54.firebasestorage.app",
+            messagingSenderId: "85648862685",
+            appId: "1:85648862685:web:f1d946e320f672441e9a34",
+            measurementId: "G-D1Y2LVB3YY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Store for global access
+        window.firebaseAuth = auth;
+        window.firebaseDatabase = database;
+
+        // Google Sign In
+        document.getElementById('googleSignInBtn').addEventListener('click', async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                // Initialize user data in database if new
+                const userRef = ref(database, 'users/' + user.uid);
+                const snapshot = await get(userRef);
+                
+                if (!snapshot.exists()) {
+                    await set(userRef, {
+                        email: user.email,
+                        displayName: user.displayName,
+                        totalPoints: 0,
+                        sessionsCompleted: 0,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                
+                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('userEmail', user.email);
+                window.location.href = 'timer.html';
+            } catch (error) {
+                console.error('Google Sign-In Error:', error);
+                alert('Sign in failed. Please try again.');
+            }
+        });
+
+        // PIN Login
+        document.getElementById('pinLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const pin = document.getElementById('pin').value;
+
+            try {
+                // Sign in anonymously and check credentials
+                await signInAnonymously(auth);
+                const usersRef = ref(database, 'pinUsers/' + username);
+                const snapshot = await get(usersRef);
+
+                if (snapshot.exists() && snapshot.val().pin === pin) {
+                    localStorage.setItem('userId', username);
+                    localStorage.setItem('loginMethod', 'pin');
+                    window.location.href = 'timer.html';
+                } else {
+                    alert('Invalid username or PIN');
+                }
+            } catch (error) {
+                console.error('PIN Login Error:', error);
+                alert('Login failed. Please try again.');
+            }
+        });
+
+        // Signup Modal
+        const modal = document.getElementById('signupModal');
+        const showSignupBtn = document.getElementById('showSignupBtn');
+        const closeBtn = document.querySelector('.close');
+
+        showSignupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Signup Form
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('signupUsername').value;
+            const pin = document.getElementById('signupPin').value;
+            const confirmPin = document.getElementById('confirmPin').value;
+
+            if (pin !== confirmPin) {
+                alert('PINs do not match!');
+                return;
+            }
+
+            try {
+                await signInAnonymously(auth);
+                const usersRef = ref(database, 'pinUsers/' + username);
+                const snapshot = await get(usersRef);
+
+                if (snapshot.exists()) {
+                    alert('Username already exists!');
+                    return;
+                }
+
+                await set(usersRef, {
+                    pin: pin,
+                    totalPoints: 0,
+                    sessionsCompleted: 0,
+                    createdAt: new Date().toISOString()
+                });
+
+                alert('Account created successfully!');
+                modal.style.display = 'none';
+                document.getElementById('signupForm').reset();
+            } catch (error) {
+                console.error('Signup Error:', error);
+                alert('Signup failed. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
