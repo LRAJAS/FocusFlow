@@ -11,7 +11,7 @@
 [View Demo](#-demo) • [Features](#-features) • [Getting Started](#-getting-started) • [Tech Stack](#-tech-stack)
 
 </div>
-
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge&logo=vercel)](https://lrajas.github.io/FocusFlow)
 ---
 
 ## 📖 About The Project
@@ -211,3 +211,15 @@ Give it a ⭐ if it helped you!
 [⬆ Back to Top](#️-focusflow---transform-distraction-into-achievement)
 
 </div>
+
+## 📞 Contact
+
+**Creator**: LRAJAS
+- GitHub: [@LRAJAS](https://github.com/LRAJAS)
+- Project Link: [FocusFlow](https://github.com/LRAJAS/FocusFlow)
+
+---
+
+## ⭐ Show Your Support
+
+If FocusFlow helped you study better, please give it a ⭐!
