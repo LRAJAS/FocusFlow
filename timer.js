@@ -370,7 +370,7 @@ const chatInput = document.getElementById('chatInput');
 const sendMessage = document.getElementById('sendMessage');
 
 // Replace with your actual Gemini API key
-const GEMINI_API_KEY = 'AIzaSyAFMq32w_CdybQCaVr692704vhZDa7HNGs';
+const GEMINI_API_KEY = 'AIzaSyDJpwjjhuW6B23ikAvxwyMaQ3IWbAa7Wk0';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 chatbotToggle.addEventListener('click', () => {
