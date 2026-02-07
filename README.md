@@ -101,43 +101,6 @@ focusflow/
 
 ---
 
-## 🌐 Deploying to GitHub Pages
-
-### Step-by-Step Guide
-
-1. **Create GitHub Repository**
-   - Go to [github.com](https://github.com)
-   - Click "New repository"
-   - Name it "focusflow"
-   - Make it Public (for GitHub Pages)
-
-2. **Push Your Code**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/YOUR_USERNAME/focusflow.git
-   git branch -M main
-   git push -u origin main
-   ```
-
-3. **Enable GitHub Pages**
-   - Repository → Settings → Pages
-   - Source: Deploy from branch "main"
-   - Folder: / (root)
-   - Save
-
-4. **Update Firebase**
-   - Firebase Console → Authentication → Settings
-   - Add authorized domain: `YOUR_USERNAME.github.io`
-
-5. **Your Site is Live!**
-   ```
-   https://YOUR_USERNAME.github.io/focusflow/
-   ```
-
----
-
 ## ⚙️ Configuration
 
 ### Firebase Setup
