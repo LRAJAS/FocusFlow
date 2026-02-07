@@ -3,7 +3,7 @@
 <div align="center">
 
 ![FocusFlow Banner](https://img.shields.io/badge/FocusFlow-Study%20Timer-6366f1?style=for-the-badge&logo=clockify&logoColor=white)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://yourusername.github.io/focusflow)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://lrajas.github.io/focusflow)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 **Turn your device from a distraction into a powerful study tool**
