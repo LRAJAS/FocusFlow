@@ -405,9 +405,11 @@ async function sendChatMessage() {
                     }]
                 }],
                 generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 500,
-                }
+                    temperature: 0.7,      // Creativity (0-2)
+                    maxOutputTokens: 2048, // Length limit
+                    topP: 0.95,           // Diversity
+                    topK: 40              // Word selection
+}
             })
         });
         
