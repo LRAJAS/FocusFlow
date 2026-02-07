@@ -3,7 +3,7 @@
 <div align="center">
 
 ![FocusFlow Banner](https://img.shields.io/badge/FocusFlow-Study%20Timer-6366f1?style=for-the-badge&logo=clockify&logoColor=white)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://yourusername.github.io/focusflow)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://lrajas.github.io/focusflow)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 **Turn your device from a distraction into a powerful study tool**
@@ -98,43 +98,6 @@ focusflow/
 ├── README.md               # This file
 └── .gitignore
 ```
-
----
-
-## 🌐 Deploying to GitHub Pages
-
-### Step-by-Step Guide
-
-1. **Create GitHub Repository**
-   - Go to [github.com](https://github.com)
-   - Click "New repository"
-   - Name it "focusflow"
-   - Make it Public (for GitHub Pages)
-
-2. **Push Your Code**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/YOUR_USERNAME/focusflow.git
-   git branch -M main
-   git push -u origin main
-   ```
-
-3. **Enable GitHub Pages**
-   - Repository → Settings → Pages
-   - Source: Deploy from branch "main"
-   - Folder: / (root)
-   - Save
-
-4. **Update Firebase**
-   - Firebase Console → Authentication → Settings
-   - Add authorized domain: `YOUR_USERNAME.github.io`
-
-5. **Your Site is Live!**
-   ```
-   https://YOUR_USERNAME.github.io/focusflow/
-   ```
 
 ---
 
